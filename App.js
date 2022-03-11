@@ -8,21 +8,26 @@ const trackPlayerInit = async () => {
 
   await TrackPlayer.add({
     id: '2',
-    url: `${RNFS.DocumentDirectoryPath}/test.mp3`,
-    title: 'Raindrops on window sill',
-    artist: 'desconhecido',
-    artwork: 'https://picsum.photos/id/10/200/300',
     album: 'Chosic',
+    artist: 'desconhecido',
+    title: 'Raindrops on window sill',
+    url: `${RNFS.DocumentDirectoryPath}/test.mp3`,
+    artwork: 'https://picsum.photos/id/10/200/300',
   });
 
   return true;
 };
 
 export default function mp3player() {
+  const [hasMp3, setMp3] = useState(false);
   const [isTrackPlayerInit, setIsTrackPlayerInit] = useState(false);
 
   function playerMp3() {
-    TrackPlayer.play();
+    if (hasMp3) {
+      return TrackPlayer.play();
+    }
+
+    return console.log('Por favor, efetue o download do mp3!');
   }
 
   function download() {
@@ -39,17 +44,26 @@ export default function mp3player() {
 
   function readFile() {
     RNFS.readDir(RNFS.DocumentDirectoryPath)
-      .then(res => console.log('readDir ==> ', res))
-      .catch(err => console.log('readDir Error ==> ', err.message));
+      .then(res => {
+        setMp3(true);
+        console.log('readDir ==> ', res);
+      })
+      .catch(err => {
+        setMp3(false);
+        console.log('readDir Error ==> ', err.message);
+      });
   }
 
   useEffect(() => {
+    readFile();
+
     const startPlayer = async () => {
       let isInit = await trackPlayerInit();
-      console.log(isInit);
+      console.log('isInit ==> ', isInit);
 
       setIsTrackPlayerInit(isInit);
     };
+
     startPlayer();
   }, []);
 

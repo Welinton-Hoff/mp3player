@@ -7,4 +7,5 @@ module.exports = async function () {
   TrackPlayer.addEventListener('pause', () => TrackPlayer.pause());
   TrackPlayer.addEventListener('stop', () => TrackPlayer.destroy());
 };
- */ module.exports = async function () {};
+ */
+module.exports = async function () {};
