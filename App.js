@@ -1,7 +1,7 @@
 import RNFS from 'react-native-fs';
 import React, {useEffect, useState} from 'react';
 import TrackPlayer from 'react-native-track-player';
-import {TouchableOpacity, View, Text} from 'react-native';
+import {TouchableOpacity, View, Text, StyleSheet} from 'react-native';
 
 const trackPlayerInit = async () => {
   await TrackPlayer.setupPlayer();
@@ -55,7 +55,7 @@ export default function mp3player() {
 
   return (
     <View style={styles.container}>
-      <TouchableOpacity style={styles.dowloadButton} onPress={() => download()}>
+      <TouchableOpacity style={styles.dowloadButton} onPress={download}>
         <Text style={styles.textColor}>Donwload!</Text>
       </TouchableOpacity>
 
